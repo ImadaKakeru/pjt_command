@@ -59,14 +59,14 @@ char* secondsearch(char* word,char* s2){
 }
 
 
-int main2(int argc,char* argv[]){
+int main(int argc,char* argv[]){
   struct _option *head;
   struct _option *oldhead;
   struct _option *tail;
   struct _option *headque;
   struct _file *f;
   struct _BinSTreeNode *rootNode = NULL;
-  char* testfile;
+  char* testfile=NULL;
   int i=1;
   int j=0;
   int x;
@@ -137,9 +137,9 @@ int main2(int argc,char* argv[]){
           printf("usage: ERROR(incorrect -p format '-p' is one)\n");
           return 0;
         }
-        
         options[option_count] = 2;
         option_count ++;
+        printf("optioncount\n");
         if(i+1 == argc){
           i++;
           break;
@@ -148,9 +148,12 @@ int main2(int argc,char* argv[]){
         if( atoi(argv[i+1]) == 0 || atoi(argv[i+1]) == 1 || atoi(argv[i+1]) == 2){
           if( filecheck(argv[i+1]) == 0){
             p_number = atoi(argv[i+1]);
-            i = i+2;
+            if(i+2 != argc){
+              i = i+2;
+            }
           }
           else{
+            printf("else\n");
             p_number = 1;
             i++;
           }
@@ -189,7 +192,6 @@ int main2(int argc,char* argv[]){
         }
         i = i+2;
       }
-      
       else{
         printf("usage: ERROR(options are invalid\n)");
         return 0;
@@ -201,9 +203,9 @@ int main2(int argc,char* argv[]){
     }
   }
   while( i < argc){
-    testfile = testcase(testfile,argv[i]);
-    if(testfile[0] == '-'){
-      printf("usage: input ERROR\n");
+    //testfile = testcase(testfile,argv[i]);
+    if(argv[i][0] == '-'){
+      printf("usage: some options are invalid\n");
       clearBinSTree(rootNode);
       free(testfile);
       return 0;
@@ -215,13 +217,17 @@ int main2(int argc,char* argv[]){
     j = 0;
     if(fp != NULL){
       f = filesearch(argv[i]);
-      rootNode = createNode(f[j].word);
-      free(f[j].word);
-      j++;
-      while(f[j].word != NULL){
-        addNode(rootNode,createNode(f[j].word));
+      if(rootNode == NULL){
+        rootNode = createNode(f[j].word);
         free(f[j].word);
         j++;
+      }
+      else{
+        while(f[j].word != NULL){
+          addNode(rootNode,createNode(f[j].word));
+          free(f[j].word);
+          j++;
+        }
       }
       filecount++;
       i++;
@@ -229,7 +235,7 @@ int main2(int argc,char* argv[]){
       free(f);
     }
     else{
-      printf("file open ERROR\n");
+      printf("usage: file open ERROR\n");
       return 0;
     }
   }
@@ -293,7 +299,7 @@ int main2(int argc,char* argv[]){
     }
     //p-option
     else if(options[k] == 2){
-      if(p_number == 7){
+      if(p_number != 0 || p_number != 1 || p_number != 2){
         p_number = 1;
       }
       printf("---BinSTree---\n");
