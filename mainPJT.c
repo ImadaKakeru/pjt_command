@@ -139,7 +139,6 @@ int main(int argc,char* argv[]){
         }
         options[option_count] = 2;
         option_count ++;
-        printf("optioncount\n");
         if(i+1 == argc){
           i++;
           break;
@@ -153,10 +152,12 @@ int main(int argc,char* argv[]){
             }
           }
           else{
-            printf("else\n");
             p_number = 1;
             i++;
           }
+        }
+        else{
+          i++;
         }
       }
       
@@ -221,6 +222,11 @@ int main(int argc,char* argv[]){
         rootNode = createNode(f[j].word);
         free(f[j].word);
         j++;
+        while(f[j].word != NULL){
+          addNode(rootNode,createNode(f[j].word));
+          free(f[j].word);
+          j++;
+        }
       }
       else{
         while(f[j].word != NULL){
