@@ -114,7 +114,7 @@ int main2(int argc,char* argv[]){
         option_count ++;
         
         if(argv[i+1][0] != '/'){
-          printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
+          printf("usage: ERROR(incorrect -s format follow -s/match/replace/)\n");
           return 0;
         }
         
@@ -134,7 +134,7 @@ int main2(int argc,char* argv[]){
       else if(mystrcmp(argv[i],poption) == 0){
         //ここで-pが重複していないか調べる関数を実装
         if(p_number != 7){
-          printf("usage: ERROR(incorrect -s format '-p' is one\n)");
+          printf("usage: ERROR(incorrect -p format '-p' is one)\n");
           return 0;
         }
         
