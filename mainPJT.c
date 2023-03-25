@@ -95,6 +95,8 @@ int main(int argc,char* argv[]){
   char *input;
   char *s1;
   char *s2;
+  int s;
+  
   int options[100];       //option情報を格納
 
   int option_count = 0; //optionの数を格納
@@ -320,7 +322,6 @@ int main(int argc,char* argv[]){
     else if(options[k] == 3){
       if(ucount == 0){
         uNode(rootNode);
-        printTree(rootNode,1);
         ucount++;
       }
       else{
@@ -337,9 +338,15 @@ int main(int argc,char* argv[]){
       
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
-      printTree(rootNode,1);
-      //printf("%s %d\n",s1,mystrlen(s2));
-      if(atoi(s2)  == 0){
+      s = *s2;
+      //printTree(rootNode,1);
+      //printf("%s %s %d \n",s1,s2,s);
+      if(s < 48 || s >57){
+        removeNode(rootNode,s1,1);
+        free(s1);
+        free(s2);
+      }
+      else if(atoi(s2)  == 0){
         if(mystrlen(s2) != 1){
           removeNode(rootNode,s1,1);
           free(s1);
@@ -351,12 +358,6 @@ int main(int argc,char* argv[]){
           free(s2);
         }
       }
-      /*else if(atoi(s2) < 48){
-        printf("usage : input -r [/word/number/]\n");
-      }
-      else if(atoi(s2) > 57){
-        printf("usage :\n");
-        }*/
       else{
         removeNode(rootNode,s1,atoi(s2));
         free(s1);
