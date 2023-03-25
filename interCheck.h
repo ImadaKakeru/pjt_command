@@ -38,4 +38,5 @@ struct _BinSTreeNode* DictStruct(struct _BinSTreeNode* d,const int n);
 struct _option* createque(char *word);
 void addque(option *headque,option *add,option *tail);
 struct _file* filesearch(char* filename);
-struct _BinSTreeNode* uNode(BinSTreeNode *rootNode);
+void uNode(BinSTreeNode *rootNode);
+struct _file* standard(char *input);
