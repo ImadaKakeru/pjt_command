@@ -251,7 +251,7 @@ int main(int argc,char* argv[]){
   if(filecount == 0){
     input = (char*)malloc(sizeof(char)*256);
     f = (struct _file*)malloc(sizeof(struct _file)*1500);
-    printf("---standard input---\n");
+    //printf("---standard input---\n");
     while(fgets(input,256,stdin) != NULL){
       f = standard(input);
       if(rootNode == NULL){
@@ -278,7 +278,7 @@ int main(int argc,char* argv[]){
       printf("---input ERROR---\n");
       return 0;
     }
-    printf("\n\n");
+    //printf("\n\n");
   }
   /*for(i=0 ; i < j ; i++){
     
@@ -310,7 +310,7 @@ int main(int argc,char* argv[]){
     }
     //p-option
     else if(options[k] == 2){
-      if(p_number != 0 || p_number != 1 || p_number != 2){
+      if(p_number != 0 &&  p_number != 1 &&  p_number != 2){
         p_number = 1;
       }
       printf("---BinSTree---\n");
@@ -320,6 +320,7 @@ int main(int argc,char* argv[]){
     else if(options[k] == 3){
       if(ucount == 0){
         uNode(rootNode);
+        printTree(rootNode,1);
         ucount++;
       }
       else{
@@ -336,9 +337,34 @@ int main(int argc,char* argv[]){
       
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
-      removeNode(rootNode,s1,atoi(s2));
-      free(s1);
-      free(s2);
+      printTree(rootNode,1);
+      //printf("%s %d\n",s1,mystrlen(s2));
+      if(atoi(s2)  == 0){
+        if(mystrlen(s2) != 1){
+          removeNode(rootNode,s1,1);
+          free(s1);
+          free(s2);
+        }
+        else{
+          removeNode(rootNode,s1,atoi(s2));
+          free(s1);
+          free(s2);
+        }
+      }
+      /*else if(atoi(s2) < 48){
+        printf("usage : input -r [/word/number/]\n");
+      }
+      else if(atoi(s2) > 57){
+        printf("usage :\n");
+        }*/
+      else{
+        removeNode(rootNode,s1,atoi(s2));
+        free(s1);
+        free(s2);
+      }
+      //removeNode(rootNode,s1,atoi(s2));
+      //free(s1);
+      //free(s2);
       free(head->word);
       if(head->next != NULL){
         head = head->next;
