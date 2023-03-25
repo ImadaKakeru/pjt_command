@@ -350,6 +350,7 @@ int main(int argc,char* argv[]){
       printf("There is no node\n");
     }
     else{
+      printf("---BinSTree---\n");
       printTree(rootNode,1);
     }
   }
