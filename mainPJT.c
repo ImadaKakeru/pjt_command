@@ -100,7 +100,7 @@ int main(int argc,char* argv[]){
   int option_count = 0; //optionの数を格納
   
   int p_number = 7;        //printTreeの走査方法を格納。
-  
+  int ncount =0;
   FILE* fp;
   while(i < argc){
     //optionの整理
@@ -132,6 +132,7 @@ int main(int argc,char* argv[]){
       }
       //p option
       else if(mystrcmp(argv[i],poption) == 0){
+        ncount++;
         //ここで-pが重複していないか調べる関数を実装
         if(p_number != 7){
           printf("usage: ERROR(incorrect -p format '-p' is one)\n");
@@ -303,8 +304,10 @@ int main(int argc,char* argv[]){
       
       free(s1);
       free(s2);
-      head = head->next;
       free(head->word);
+      if(head->next != NULL){
+        head = head->next;
+      }
       free(oldhead);
     }
     //p-option
@@ -321,7 +324,6 @@ int main(int argc,char* argv[]){
         p_number = 1;
       }
       uNode(rootNode);
-      printf("-u ok\n");
     }
     //r-option
     else{
@@ -333,18 +335,25 @@ int main(int argc,char* argv[]){
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
       removeNode(rootNode,s1,atoi(s2));
-      
       free(s1);
       free(s2);
-      head = head->next;
       free(head->word);
+      if(head->next != NULL){
+        head = head->next;
+      }
       free(oldhead);
     }
   }
-  if(p_number == 7){
-    printTree(rootNode);
+  if(ncount == 0){
+    if(rootNode->word == NULL){
+      printf("---BinSTree---\n");
+      printf("There is no node\n");
+    }
+    else{
+      printTree(rootNode,1);
+    }
   }
-  clearBinSTree(rootNode);
+  //clearBinSTree(rootNode);
   return 0;
 }
 

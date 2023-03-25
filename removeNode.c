@@ -146,7 +146,7 @@ void rootremove(BinSTreeNode *rootNode){
   right = rootNode->right;
   //left = rootNode->left;
   if(rootNode->left == NULL && rootNode->right == NULL){
-    printf("0\n");
+    //printf("0\n");
     free(rootNode->word);
     free(rootNode);
     rootNode->word = NULL;
@@ -155,7 +155,7 @@ void rootremove(BinSTreeNode *rootNode){
   }
 
   else if(rootNode->left != NULL && rootNode->right != NULL){
-    printf("1\n");
+    //printf("1\n");
     if(right->left == NULL){//OK
       mystrcpy(rootNode->word,right->word);
       right->pare = NULL;
@@ -170,8 +170,8 @@ void rootremove(BinSTreeNode *rootNode){
     }
 
     else if(right->left != NULL){
-      printf("2\n");
-      printf("righthaveleft\n");
+      //printf("2\n");
+      //printf("righthaveleft\n");
       tmp = leftsearch(right);//右の子ノードが左の最先端に持つノードを回収
       pare = tmp->pare;
       pare->left = NULL;//最左端の子ノードを孤立させる。
@@ -183,11 +183,11 @@ void rootremove(BinSTreeNode *rootNode){
   }
 
   else if(rootNode->left == NULL){
-    printf("3\n");
+    //printf("3\n");
     onlyright(rootNode);
   }
   else{
-    printf("4\n");
+    //printf("4\n");
     onlyleft(rootNode);
   }
 }
