@@ -1,95 +1,189 @@
 #include "interCheck.h"
-int getnum(BinSTreeNode* d){
-  int n=0;
-  while(d[n].word != NULL){
-    n++;
-  }
-  return n;
-}
-
-BinSTreeNode*  getTree(BinSTreeNode* rootNode,BinSTreeNode* d,int *i){
-  int x;
-  if(rootNode == NULL){
-    return 0;
-  }
-  //ツリーに入っている文字を同じ構造体の中に入れる//
-  getTree(rootNode->left,d,i);//左側を探索
-  getTree(rootNode->right,d,i);
-  x = mystrlen(rootNode->word);
-  d[*i].word = (char*)malloc(sizeof(char)*x);
-  mystrcpy(d[*i].word,rootNode->word);//dにノードの文字を代
-  *i = *i+1;
-  return d;
-}
-
-BinSTreeNode* uNode(BinSTreeNode *rootNode){
-  int x=0;
-  int i=0;
-  int j=0;
-  int k =0;
-  int n;
-  int nn;
-  struct _BinSTreeNode* d;
-  struct _BinSTreeNode* dd;
-  struct _BinSTreeNode* ddd;
-  
-  d = (struct _BinSTreeNode*)malloc(sizeof(struct _BinSTreeNode)*5000);
-  dd = (struct _BinSTreeNode*)malloc(sizeof(struct _BinSTreeNode)*5000);
-  
-  d = getTree(rootNode,d,&x);
-
-  n = getnum(d);
-  
-  for(i = 0 ; i < n ; i++){
-    for(j=n-1 ; j > i ; j--){
-      if(mystrcmp(d[i].word,d[j].word) == 0){
-        dd[k].word = (char*)malloc(sizeof(char)*mystrlen(d[i].word));
-        mystrcpy(dd[k].word,d[i].word);
-        k++;
-        break;
-      }
-    }
-  }
-
-  nn = k/2;
-  if(nn == 0){
-    ddd = createNode(dd[nn].word);
-    ddd->right = NULL;
-    ddd->left = NULL;
-    for(i=0 ; i < n ; i++){
-      free(d[i].word);
+void unokids(BinSTreeNode *rootNode){//OK
+  struct _BinSTreeNode *pare;
+  pare = rootNode->pare;
+  if(pare != NULL){
+    if(pare->right == rootNode){
+      pare->right = NULL;
     }
     
-    for(i=0; i<k ; i++){
-      free(dd[i].word);
+    if(pare->left == rootNode){
+      pare->left = NULL;
     }
-    free(d);
-    free(dd);
-    
-    return ddd;
+  }
+  
+  free(rootNode->word);
+  rootNode->pare = NULL;
+  free(rootNode);
+}
+
+BinSTreeNode* uleftsearch(BinSTreeNode *rootNode){
+  if(rootNode->left == NULL){
+    return rootNode;
+  }
+  
+  else{
+    return uleftsearch(rootNode->left);
+  }
+}
+
+//一致したノードが右だけに子ノードを持っていた時の処理
+void uonlyright(BinSTreeNode *rootNode){//OK
+  struct _BinSTreeNode *right;
+  struct _BinSTreeNode *rightright;
+  struct _BinSTreeNode *rightleft;
+  right = rootNode->right;
+  mystrcpy(rootNode->word,right->word);
+  printf("ok\n");
+  if(right->right != NULL){
+    rightright = right->right;
+    rootNode->right = rightright;
+    rightright->pare = rootNode;
   }
   else{
-    ddd = createNode(dd[nn].word);
-    ddd->right = NULL;
-    ddd->left = NULL;
+    rootNode->right = NULL;
   }
+  
+  if(right->left != NULL){
+    rightleft = right->left;
+    rootNode->left = rightleft;
+    rightleft->pare = rootNode;
+  }
+  else{
+    rootNode->left = NULL;
+  }
+  right->pare = NULL;
+  right->right = NULL;
+  right->left = NULL;
+  free(right->word);
+  free(right);
+}
 
-  for(i=0 ; i<k ; i++){
-    if(i == nn){
-      continue;
+BinSTreeNode* urightsearch(BinSTreeNode *rootNode){
+  if(rootNode->right == NULL){
+    return rootNode;
+  }
+  else{
+    return  urightsearch(rootNode->right);
+  }
+}
+//一致したノードが左だけに子ノードを持っていた時の処理
+void uonlyleft(BinSTreeNode *rootNode){
+  struct _BinSTreeNode *left;
+  struct _BinSTreeNode *leftright;
+  struct _BinSTreeNode *leftleft;
+  
+  left = rootNode->left;
+  mystrcpy(rootNode->word,left->word);
+  
+  if(left->right != NULL){
+    leftright = left->right;
+    rootNode->right = leftright;
+    leftright->pare = rootNode;
+  }
+  else{
+    rootNode->right = NULL;
+  }
+  
+  if(left->left != NULL){
+    leftleft = left->left;
+    rootNode->left = leftleft;
+    leftleft->pare = rootNode;
+  }
+  else{
+    rootNode->left = NULL;
+  }
+  left->pare = NULL;
+  left->right = NULL;
+  left->left = NULL;
+  free(left->word);
+  free(left);
+}
+    
+//一致したノードが左右に子ノードを持っていた時の処理
+void udoublekids(BinSTreeNode *rootNode){
+  struct _BinSTreeNode *tmp;
+  struct _BinSTreeNode *pare;
+  struct _BinSTreeNode *right;
+  //struct _BinSTreeNode *left;
+  
+  right = rootNode->right;
+  //left = rootNode->left;
+  
+  if(right->left == NULL){
+    mystrcpy(rootNode->word,right->word);
+    right->pare = NULL;
+    tmp = right->right;
+    if(tmp != NULL){
+      tmp->pare = rootNode;     
     }
-    addNode(ddd,createNode(dd[i].word));
+    right->right = NULL;
+    free(rootNode->word);
+    free(rootNode);
   }
   
-  for(i=0 ; i < n ; i++){
-    free(d[i].word);
+  else if(right->left != NULL){
+    tmp = uleftsearch(right);//右の子ノードが左の最先端に持つノードを回収
+    pare = tmp->pare;
+    pare->left = NULL;//最左端の子ノードを孤立させる。
+    tmp->pare = NULL;
+    mystrcpy(rootNode->word,tmp->word);//ルートに取ってきたノードの文字をコピーする。
+    free(tmp->word);//取ってきたものを解放する。
+    free(tmp);
+  }
+  //置き換えたらPJTの性質を満たさなくなるのでソートして整えておく
+  sortBinSTree(rootNode);
+}
+void uallremove(BinSTreeNode *rootNode,char *word){
+  if(rootNode == NULL){
+    return;
   }
   
-  for(i=0; i<k ; i++){
-    free(dd[i].word);
+  uallremove(rootNode->left,word);
+  uallremove(rootNode->right,word);
+  
+  if(mystrcmp(rootNode->word,word) == 0){
+    //子を持たない時
+    if(rootNode->left == NULL && rootNode->right == NULL){
+      printf("nokids\n");
+      unokids(rootNode);
+    }
+    
+    //両方に子がいる時
+    else if(rootNode->left != NULL && rootNode->right != NULL){
+      printf("doublekids\n");
+      udoublekids(rootNode);
+    }
+    
+    //右だけに子を持つとき
+    else if(rootNode->left == NULL){
+      printf("onlyright\n");
+      uonlyright(rootNode);
+    }
+    
+    //左だけに子を持つ時
+    else if(rootNode->right == NULL){
+      printf("onlyleft\n");
+      uonlyleft(rootNode);
+    }
   }
   
-  free(d);
-  free(dd);
-  return ddd;
+  else{
+    return;
+  }
+}
+void uNode(BinSTreeNode *rootNode){
+
+  if(rootNode == NULL){
+    return;
+  }
+  uNode(rootNode->left);
+  uNode(rootNode->right);
+  if(rootNode->right != NULL){
+    uallremove(rootNode->right,rootNode->word);
+  }
+  
+  if(rootNode->right != NULL){
+    uallremove(rootNode->left,rootNode->word);
+  } 
 }

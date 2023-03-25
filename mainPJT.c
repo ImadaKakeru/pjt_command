@@ -100,7 +100,7 @@ int main(int argc,char* argv[]){
   int option_count = 0; //optionの数を格納
   
   int p_number = 7;        //printTreeの走査方法を格納。
-  struct _BinSTreeNode* u;         //uオプションにおける重複したノード文字の数を格納
+  
   FILE* fp;
   while(i < argc){
     //optionの整理
@@ -320,9 +320,8 @@ int main(int argc,char* argv[]){
       if(p_number == 7){
         p_number = 1;
       }
-      u = uNode(rootNode);
-      printTree(u,p_number);
-      clearBinSTree(u);
+      uNode(rootNode);
+      printf("-u ok\n");
     }
     //r-option
     else{
@@ -341,6 +340,9 @@ int main(int argc,char* argv[]){
       free(head->word);
       free(oldhead);
     }
+  }
+  if(p_number == 7){
+    printTree(rootNode);
   }
   clearBinSTree(rootNode);
   return 0;

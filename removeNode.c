@@ -34,10 +34,9 @@ void onlyright(BinSTreeNode *rootNode){//OK
   struct _BinSTreeNode *right;
   struct _BinSTreeNode *rightright;
   struct _BinSTreeNode *rightleft;
-  
   right = rootNode->right;
   mystrcpy(rootNode->word,right->word);
-  
+  printf("ok\n");
   if(right->right != NULL){
     rightright = right->right;
     rootNode->right = rightright;
@@ -108,10 +107,10 @@ void doublekids(BinSTreeNode *rootNode){
   struct _BinSTreeNode *tmp;
   struct _BinSTreeNode *pare;
   struct _BinSTreeNode *right;
-  struct _BinSTreeNode *left;
+  //struct _BinSTreeNode *left;
   
   right = rootNode->right;
-  left = rootNode->left;
+  //left = rootNode->left;
   
   if(right->left == NULL){
     mystrcpy(rootNode->word,right->word);
@@ -142,11 +141,12 @@ void rootremove(BinSTreeNode *rootNode){
   struct _BinSTreeNode *tmp;
   struct _BinSTreeNode *pare;
   struct _BinSTreeNode *right;
-  struct _BinSTreeNode *left;
+  //struct _BinSTreeNode *left;
 
   right = rootNode->right;
-  left = rootNode->left;
+  //left = rootNode->left;
   if(rootNode->left == NULL && rootNode->right == NULL){
+    printf("0\n");
     free(rootNode->word);
     free(rootNode);
     rootNode->word = NULL;
@@ -155,7 +155,7 @@ void rootremove(BinSTreeNode *rootNode){
   }
 
   else if(rootNode->left != NULL && rootNode->right != NULL){
-    
+    printf("1\n");
     if(right->left == NULL){//OK
       mystrcpy(rootNode->word,right->word);
       right->pare = NULL;
@@ -170,6 +170,7 @@ void rootremove(BinSTreeNode *rootNode){
     }
 
     else if(right->left != NULL){
+      printf("2\n");
       printf("righthaveleft\n");
       tmp = leftsearch(right);//右の子ノードが左の最先端に持つノードを回収
       pare = tmp->pare;
@@ -182,9 +183,11 @@ void rootremove(BinSTreeNode *rootNode){
   }
 
   else if(rootNode->left == NULL){
+    printf("3\n");
     onlyright(rootNode);
   }
   else{
+    printf("4\n");
     onlyleft(rootNode);
   }
 }
@@ -281,13 +284,15 @@ void removeNode(BinSTreeNode *rootNode,char *word,int delall){
       return;
     }
     if( mystrcmp(rootNode->word,word) == 0 ){
+      printf("rootremove\n");
       rootremove(rootNode);
-      if(rootNode->word == NULL){
+      if(rootNode->word  == NULL){
         return;
       }
       removeNode(rootNode,word,delall);
     }
     else{
+      printf("allremove\n");
       allremove(rootNode,word);
     }
   }
