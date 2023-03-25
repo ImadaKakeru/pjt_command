@@ -36,7 +36,7 @@ void onlyright(BinSTreeNode *rootNode){//OK
   struct _BinSTreeNode *rightleft;
   right = rootNode->right;
   mystrcpy(rootNode->word,right->word);
-  printf("ok\n");
+  //printf("ok\n");
   if(right->right != NULL){
     rightright = right->right;
     rootNode->right = rightright;
@@ -117,11 +117,16 @@ void doublekids(BinSTreeNode *rootNode){
     right->pare = NULL;
     tmp = right->right;
     if(tmp != NULL){
-      tmp->pare = rootNode;     
+      tmp->pare = rootNode;
+      rootNode->right = tmp;
+    }
+    else{
+      printf("else\n");
+      rootNode->right = NULL; 
     }
     right->right = NULL;
-    free(rootNode->word);
-    free(rootNode);
+    free(right->word);
+    free(right);
   }
   
   else if(right->left != NULL){
@@ -134,7 +139,7 @@ void doublekids(BinSTreeNode *rootNode){
     free(tmp);
   }
   //置き換えたらPJTの性質を満たさなくなるのでソートして整えておく
-  sortBinSTree(rootNode);
+  //sortBinSTree(rootNode);
 }
 
 void rootremove(BinSTreeNode *rootNode){
@@ -203,25 +208,25 @@ void allremove(BinSTreeNode *rootNode,char *word){
   if(mystrcmp(rootNode->word,word) == 0){
     //子を持たない時
     if(rootNode->left == NULL && rootNode->right == NULL){
-      printf("nokids\n");
+      //printf("nokids\n");
       nokids(rootNode);
     }
     
     //両方に子がいる時
     else if(rootNode->left != NULL && rootNode->right != NULL){
-      printf("doublekids\n");
+      //printf("doublekids\n");
       doublekids(rootNode);
     }
     
     //右だけに子を持つとき
     else if(rootNode->left == NULL){
-      printf("onlyright\n");
+      //printf("onlyright\n");
       onlyright(rootNode);
     }
     
     //左だけに子を持つ時
     else if(rootNode->right == NULL){
-      printf("onlyleft\n");
+      //printf("onlyleft\n");
       onlyleft(rootNode);
     }
   }
@@ -244,7 +249,7 @@ void oneremove(BinSTreeNode *rootNode,char *word){
   if(mystrcmp(rootNode->word,word) == 0){
       //子を持たない時
     if(rootNode->left == NULL && rootNode->right == NULL){
-      printf("nokids\n");
+      //printf("nokids\n");
       nokids(rootNode);
       return;
     }
@@ -258,14 +263,14 @@ void oneremove(BinSTreeNode *rootNode,char *word){
     
     //右だけに子を持つとき
     else if(rootNode->left == NULL){
-      printf("right\n");
+      //printf("right\n");
       onlyright(rootNode);
       return;
     }
     
     //左だけに子を持つ時
     else if(rootNode->right == NULL){
-      printf("left\n");
+      //printf("left\n");
       onlyleft(rootNode);
       return;
     }
@@ -284,7 +289,7 @@ void removeNode(BinSTreeNode *rootNode,char *word,int delall){
       return;
     }
     if( mystrcmp(rootNode->word,word) == 0 ){
-      printf("rootremove\n");
+      //printf("rootremove\n");
       rootremove(rootNode);
       if(rootNode->word  == NULL){
         return;
@@ -292,13 +297,14 @@ void removeNode(BinSTreeNode *rootNode,char *word,int delall){
       removeNode(rootNode,word,delall);
     }
     else{
-      printf("allremove\n");
+      //printf("allremove\n");
       allremove(rootNode,word);
     }
   }
   
   //一番近いものを削除する時
   else{
+    //printf("del one\n");
     if(mystrcmp(rootNode->word,word) == 0){
       rootremove(rootNode);
       return;

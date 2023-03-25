@@ -102,7 +102,7 @@ int main(int argc,char* argv[]){
   int option_count = 0; //optionの数を格納
   
   int p_number = 7;        //printTreeの走査方法を格納。
-  int ncount =0;
+  //int ncount =0;
   int ucount = 0;
   FILE* fp;
   while(i < argc){
@@ -135,14 +135,14 @@ int main(int argc,char* argv[]){
       }
       //p option
       else if(mystrcmp(argv[i],poption) == 0){
-        ncount++;
+        //ncount++;
         //ここで-pが重複していないか調べる関数を実装
         if(p_number != 7){
           printf("usage: ERROR(incorrect -p format '-p' is one)\n");
           return 0;
         }
-        options[option_count] = 2;
-        option_count ++;
+        //options[option_count] = 2;
+        //option_count ++;
         if(i+1 == argc){
           i++;
           break;
@@ -167,8 +167,9 @@ int main(int argc,char* argv[]){
       
       //u option
       else if(mystrcmp(argv[i],uoption) == 0){
-        options[option_count] = 3;
-        option_count ++;
+        ucount++;
+        //options[option_count] = 3;
+        //option_count ++;
         i++;
       }
       
@@ -372,13 +373,12 @@ int main(int argc,char* argv[]){
         if(rootNode->word == NULL){
           break;
         }
+        //printf("remove \n");
         removeNode(rootNode,s1,atoi(s2));
+        //printf("remove end\n");
         free(s1);
         free(s2);
       }
-      //removeNode(rootNode,s1,atoi(s2));
-      //free(s1);
-      //free(s2);
       free(head->word);
       if(head->next != NULL){
         //printf("head change\n");
@@ -387,15 +387,28 @@ int main(int argc,char* argv[]){
       free(oldhead);
     }
   }
-  if(ncount == 0){
-    if(rootNode->word == NULL){
-      printf("---BinSTree---\n");
-      printf("There is no node\n");
+
+  if(ucount == 1){
+    if(rootNode->word != NULL){
+      uNode(rootNode);
     }
-    else{
-      printf("---BinSTree---\n");
-      printTree(rootNode,1);
-    }
+  }
+  else if(ucount == 0){
+    
+  }
+  else{
+    printf("usage: u option should not duplicated\n");
+    return 0;
+  }
+
+  
+  if(rootNode->word == NULL){
+    printf("---BinSTree---\n");
+    printf("There is no node\n");
+  }
+  else{
+    printf("---BinSTree---\n");
+    printTree(rootNode,1);
   }
   //clearBinSTree(rootNode);
   return 0;
