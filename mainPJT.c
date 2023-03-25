@@ -224,7 +224,10 @@ int main(int argc,char* argv[]){
         j++;
         while(f[j].word != NULL){
           addNode(rootNode,createNode(f[j].word));
-          free(f[j].word);
+          //printf("node = %s\n",f[j].word);
+          //printTree(rootNode,1);
+          //printf("\n");
+          free(f[j].word); 
           j++;
         }
       }
@@ -268,8 +271,9 @@ int main(int argc,char* argv[]){
         //free(input);
         j++;
       }
+      //free(input);
+      //input = (char*)malloc(sizeof(char)*256);
     }
-    free(input);
     free(f);
     if(j == 0){
       printf("---input ERROR---\n");
