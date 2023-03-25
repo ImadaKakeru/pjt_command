@@ -314,25 +314,6 @@ int main(int argc,char* argv[]){
       }
       free(oldhead);
     }
-    //p-option
-    else if(options[k] == 2){
-      if(p_number != 0 &&  p_number != 1 &&  p_number != 2){
-        p_number = 1;
-      }
-      printf("---BinSTree---\n");
-      printTree(rootNode,p_number);
-    }
-    //u-option
-    else if(options[k] == 3){
-      if(ucount == 0){
-        uNode(rootNode);
-        ucount++;
-      }
-      else{
-        printf("usage: u option should not duplicated\n");
-        return 0;
-      }
-    }
     //r-option
     else{
       //printf("-r start\n");
