@@ -101,6 +101,7 @@ int main(int argc,char* argv[]){
   
   int p_number = 7;        //printTreeの走査方法を格納。
   int ncount =0;
+  int ucount = 0;
   FILE* fp;
   while(i < argc){
     //optionの整理
@@ -320,10 +321,14 @@ int main(int argc,char* argv[]){
     }
     //u-option
     else if(options[k] == 3){
-      if(p_number == 7){
-        p_number = 1;
+      if(ucount == 0){
+        uNode(rootNode);
+        ucount++;
       }
-      uNode(rootNode);
+      else{
+        printf("usage: u option should not duplicated\n");
+        return 0;
+      }
     }
     //r-option
     else{
