@@ -60,9 +60,9 @@ char* secondsearch(char* word,char* s2){
 
 
 int main(int argc,char* argv[]){
-  struct _option *head;
+  struct _option *head=NULL;
   struct _option *oldhead;
-  struct _option *tail;
+  struct _option *tail=NULL;
   struct _option *headque;
   struct _file *f;
   struct _BinSTreeNode *rootNode = NULL;
@@ -122,7 +122,7 @@ int main(int argc,char* argv[]){
         }
         
         else{
-          if(head == tail){
+          if(head == NULL){
             headque = createque(argv[i+1]);
             head = headque;
             tail = headque;
@@ -180,18 +180,21 @@ int main(int argc,char* argv[]){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
           return 0;
         }
-        if(argv[i+1][0] != '/'){
+        
+        else if(argv[i+1][0] != '/'){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
           return 0;
         }
         
         else{
-          if(head == tail){
+          if(head == NULL){
+            //printf("head -r\n");
             headque = createque(argv[i+1]);
             head = headque;
             tail = headque;
           }
           else{
+            //printf("add -r\n");
             addque(headque,createque(argv[i+1]),tail);
           }
         }
@@ -331,6 +334,7 @@ int main(int argc,char* argv[]){
     }
     //r-option
     else{
+      //printf("-r start\n");
       oldhead = head;
       x = mystrlen(head->word);
       s1 = (char*)malloc(sizeof(char)*x);
@@ -338,9 +342,9 @@ int main(int argc,char* argv[]){
       
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
+      //printf("s1 s2 get\n");
       s = *s2;
       //printTree(rootNode,1);
-      //printf("%s %s %d \n",s1,s2,s);
       if(s < 48 || s >57){
         removeNode(rootNode,s1,1);
         free(s1);
@@ -348,17 +352,26 @@ int main(int argc,char* argv[]){
       }
       else if(atoi(s2)  == 0){
         if(mystrlen(s2) != 1){
+          if(rootNode->word == NULL){
+            break;
+          }
           removeNode(rootNode,s1,1);
           free(s1);
           free(s2);
         }
         else{
+          if(rootNode->word == NULL){
+            break;
+          }
           removeNode(rootNode,s1,atoi(s2));
           free(s1);
           free(s2);
         }
       }
       else{
+        if(rootNode->word == NULL){
+          break;
+        }
         removeNode(rootNode,s1,atoi(s2));
         free(s1);
         free(s2);
@@ -368,6 +381,7 @@ int main(int argc,char* argv[]){
       //free(s2);
       free(head->word);
       if(head->next != NULL){
+        //printf("head change\n");
         head = head->next;
       }
       free(oldhead);
