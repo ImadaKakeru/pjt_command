@@ -101,7 +101,8 @@ int main(int argc,char* argv[]){
 
   int option_count = 0; //optionの数を格納
   
-  int p_number = 7;        //printTreeの走査方法を格納。
+  int p_number = 1;//printTreeの走査方法を格納。
+  int pcount = 0;
   int scount =0;
   int ucount = 0;
   FILE* fp;
@@ -136,9 +137,9 @@ int main(int argc,char* argv[]){
       }
       //p option
       else if(mystrcmp(argv[i],poption) == 0){
-        //ncount++;
+        pcount++;
         //ここで-pが重複していないか調べる関数を実装
-        if(p_number != 7){
+        if(pcount > 1){
           printf("usage: ERROR(incorrect -p format '-p' is one)\n");
           return 0;
         }
@@ -407,7 +408,7 @@ int main(int argc,char* argv[]){
   }
   else{
     printf("---BinSTree---\n");
-    printTree(rootNode,1);
+    printTree(rootNode,p_number);
   }
   //clearBinSTree(rootNode);
   return 0;

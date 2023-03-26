@@ -6,7 +6,7 @@
 int main2 (void);
 
 //メモリリークチェック
-int main(int argc, char **argv) {
+int main (int argc, char **argv) {
 int ret = main2();
 char buf[256];
 printf("\n");
