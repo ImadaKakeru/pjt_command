@@ -16,31 +16,37 @@ BinSTreeNode*  getBinSTree(BinSTreeNode* rootNode,BinSTreeNode* d,int *i){
   getBinSTree(rootNode->left,d,i);//左側を探索
   getBinSTree(rootNode->right,d,i);
   x = mystrlen(rootNode->word);
+  //printf("malloc start\n");
   d[*i].word = (char*)malloc(sizeof(char)*x);
+  //printf("malloc end\n");
   mystrcpy(d[*i].word,rootNode->word);//dにノードの文字を代
+  //printf("mystrcpy\n");
   *i = *i+1;
-  free(rootNode->word);
-  free(rootNode);
+  //free(rootNode->word);
+  //free(rootNode);
   return d;
 }
 
 void sortBinSTree(BinSTreeNode* rootNode){
   struct _BinSTreeNode* d;
-  d = (struct _BinSTreeNode*)malloc(sizeof(struct _BinSTreeNode)*5000);
+  d = (struct _BinSTreeNode*)malloc(sizeof(struct _BinSTreeNode)*1500);
+  //printf("tree malloc\n");
   int n;
   int nn;
   int x=0;
-  int y=0;
+  //int y=0;
   int i=0;
   
   d = getBinSTree(rootNode,d,&x);//ノードに入っている文字を全てとってくる。
-  
-  //clearBinSTree(rootNode);
-  
+  //printf("d get\n");
+  clearBinSTree(rootNode);
+  rootNode = NULL;
   n = getnumber(d);//ノードの数を数える。
+  //printf("%d\n",n);
   d = DictStruct(d,n); //取ってきたノードの文字を格納した構造体の配列をソートする。
+  //printf("dict struct\n");
   nn = n/2;
-  y = mystrlen(d[nn].word);
+  //y = mystrlen(d[nn].word);
   rootNode = createNode(d[nn].word);
   
   rootNode->right = NULL;
@@ -52,10 +58,12 @@ void sortBinSTree(BinSTreeNode* rootNode){
     }
     addNode(rootNode,createNode(d[i].word));
   }
+  //printTree(rootNode,1);
+  //printf("end sort\n");
   for(i = 0; i < n; i++) {
     free(d[i].word); 
   }
   free(d);
-  
+  return;
 }
 

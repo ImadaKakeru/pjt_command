@@ -102,7 +102,7 @@ int main(int argc,char* argv[]){
   int option_count = 0; //optionの数を格納
   
   int p_number = 7;        //printTreeの走査方法を格納。
-  //int ncount =0;
+  int scount =0;
   int ucount = 0;
   FILE* fp;
   while(i < argc){
@@ -110,6 +110,7 @@ int main(int argc,char* argv[]){
     if(argv[i][0] == '-'){
       //soption
       if(mystrcmp(argv[i],soption) == 0){
+        //printf("-s start\n");
         if((i+1) ==  argc){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");          
         }
@@ -296,6 +297,9 @@ int main(int argc,char* argv[]){
   for(int k=0 ; k < option_count ; k++){
     //s-option
     if(options[k] == 1){
+      scount++;
+      //printf("%d\n",scount);
+      //printf("soption start\n");
       //構造体optionのheadを取ってくる。フリーも同時に行う。
       oldhead = head;
       x = mystrlen(head->word);
@@ -305,7 +309,10 @@ int main(int argc,char* argv[]){
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
       substString(rootNode,s1,s2);
-      
+      //printf("subst finish\n");
+      //sortBinSTree(rootNode);
+      //printf("sort finished\n\n");
+      //printTree(rootNode,1);
       free(s1);
       free(s2);
       free(head->word);
@@ -381,7 +388,18 @@ int main(int argc,char* argv[]){
     printf("usage: u option should not duplicated\n");
     return 0;
   }
-
+  
+  if(scount != 0){
+    if(rootNode->right == NULL){
+      
+    }
+    else{
+      sortBinSTree(rootNode);
+    }
+    //printf("sort start\n");
+    //sortBinSTree(rootNode);
+    //printTree(rootNode,1);
+  }
   
   if(rootNode->word == NULL){
     printf("---BinSTree---\n");

@@ -259,8 +259,7 @@ void oneremove(BinSTreeNode *rootNode,char *word){
       printf("double\n");
       doublekids(rootNode);
       return;
-    }
-    
+    }    
     //右だけに子を持つとき
     else if(rootNode->left == NULL){
       //printf("right\n");

@@ -34,7 +34,7 @@ void uonlyright(BinSTreeNode *rootNode){//OK
   struct _BinSTreeNode *rightleft;
   right = rootNode->right;
   mystrcpy(rootNode->word,right->word);
-  printf("ok\n");
+  //printf("ok\n");
   if(right->right != NULL){
     rightright = right->right;
     rootNode->right = rightright;
@@ -145,25 +145,25 @@ void uallremove(BinSTreeNode *rootNode,char *word){
   if(mystrcmp(rootNode->word,word) == 0){
     //子を持たない時
     if(rootNode->left == NULL && rootNode->right == NULL){
-      printf("nokids\n");
+      //printf("nokids\n");
       unokids(rootNode);
     }
     
     //両方に子がいる時
     else if(rootNode->left != NULL && rootNode->right != NULL){
-      printf("doublekids\n");
+      //printf("doublekids\n");
       udoublekids(rootNode);
     }
     
     //右だけに子を持つとき
     else if(rootNode->left == NULL){
-      printf("onlyright\n");
+      //printf("onlyright\n");
       uonlyright(rootNode);
     }
     
     //左だけに子を持つ時
     else if(rootNode->right == NULL){
-      printf("onlyleft\n");
+      //printf("onlyleft\n");
       uonlyleft(rootNode);
     }
   }

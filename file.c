@@ -34,7 +34,7 @@ struct _file* filesearch(char *filename){
   }
   fclose(fp);
   free(inputa);
-
+  
   for(k=0 ; k < ncount ; k++){
     f[k].word = (char*)malloc(sizeof(char)*256);
     mystrcpy(f[k].word,output[k]);
