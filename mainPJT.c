@@ -315,6 +315,7 @@ int main(int argc,char* argv[]){
   for(int k=0 ; k < option_count ; k++){
     //s-option
     if(options[k] == 1){
+      printf("-s start\n");
       scount++;
       command = commandsearch(head->word);
       if(command == 1){
@@ -344,7 +345,7 @@ int main(int argc,char* argv[]){
     }
     //r-option
     else{
-      //printf("-r start\n");
+      printf("-r start\n");
       oldhead = head;
       x = mystrlen(head->word);
       s1 = (char*)malloc(sizeof(char)*x);
@@ -397,6 +398,18 @@ int main(int argc,char* argv[]){
     }
   }
 
+  if(scount != 0){
+    if(rootNode->right == NULL){
+      
+    }
+    else{
+      sortBinSTree(rootNode);
+    }
+    //printf("sort start\n");
+    //sortBinSTree(rootNode);
+    //printTree(rootNode,1);
+  }
+  
   if(ucount == 1){
     if(rootNode->word != NULL){
       uNode(rootNode);
@@ -408,18 +421,6 @@ int main(int argc,char* argv[]){
   else{
     printf("usage: u option should not duplicated\n");
     return 0;
-  }
-  
-  if(scount != 0){
-    if(rootNode->right == NULL){
-      
-    }
-    else{
-      sortBinSTree(rootNode);
-    }
-    //printf("sort start\n");
-    //sortBinSTree(rootNode);
-    //printTree(rootNode,1);
   }
   
   if(rootNode->word == NULL){
