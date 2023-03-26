@@ -27,6 +27,23 @@ int filecheck(char* file){
     return 1;
   }
 }
+int commandsearch(char* word){
+  int i = 1;
+  while(word[i] != '/'){
+    i++;
+  }
+  i = i+1;
+
+  while(word[i] != '/'){
+    i++;
+  }
+  if(word[i+1] == '\0'){
+    return 0;
+  }
+  else{
+    return 1;
+  }
+}
 char* firstsearch(char* word,char* s1){
   int i=1;
   int n=0;
@@ -100,7 +117,7 @@ int main(int argc,char* argv[]){
   int options[100];       //option情報を格納
 
   int option_count = 0; //optionの数を格納
-  
+  int command;
   int p_number = 1;//printTreeの走査方法を格納。
   int pcount = 0;
   int scount =0;
@@ -299,8 +316,11 @@ int main(int argc,char* argv[]){
     //s-option
     if(options[k] == 1){
       scount++;
-      //printf("%d\n",scount);
-      //printf("soption start\n");
+      command = commandsearch(head->word);
+      if(command == 1){
+         printf("usage: -s /word/word/\n");
+        return 0;
+      }
       //構造体optionのheadを取ってくる。フリーも同時に行う。
       oldhead = head;
       x = mystrlen(head->word);

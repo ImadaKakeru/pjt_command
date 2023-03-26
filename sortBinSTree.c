@@ -17,7 +17,7 @@ BinSTreeNode*  getBinSTree(BinSTreeNode* rootNode,BinSTreeNode* d,int *i){
   getBinSTree(rootNode->right,d,i);
   x = mystrlen(rootNode->word);
   //printf("malloc start\n");
-  d[*i].word = (char*)malloc(sizeof(char)*(x*10));
+  d[*i].word = (char*)malloc(sizeof(char)*(x*100));
   //printf("malloc end\n");
   mystrcpy(d[*i].word,rootNode->word);//dにノードの文字を代
   //printf("mystrcpy\n");
