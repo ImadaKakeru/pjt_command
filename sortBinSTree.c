@@ -17,16 +17,16 @@ BinSTreeNode*  getBinSTree(BinSTreeNode* rootNode,BinSTreeNode* d,int *i){
   getBinSTree(rootNode->right,d,i);
   x = mystrlen(rootNode->word);
   //printf("malloc start\n");
-  d[*i].word = (char*)malloc(sizeof(char)*x);
+  d[*i].word = (char*)malloc(sizeof(char)*(x*10));
   //printf("malloc end\n");
   mystrcpy(d[*i].word,rootNode->word);//dにノードの文字を代
   //printf("mystrcpy\n");
   *i = *i+1;
-  //free(rootNode->word);
-  //free(rootNode);
+  free(rootNode->word);
+  free(rootNode);
+  rootNode = NULL;
   return d;
 }
-
 void sortBinSTree(BinSTreeNode* rootNode){
   struct _BinSTreeNode* d;
   d = (struct _BinSTreeNode*)malloc(sizeof(struct _BinSTreeNode)*1500);
@@ -39,7 +39,7 @@ void sortBinSTree(BinSTreeNode* rootNode){
   
   d = getBinSTree(rootNode,d,&x);//ノードに入っている文字を全てとってくる。
   //printf("d get\n");
-  clearBinSTree(rootNode);
+  //clearBinSTree(rootNode);
   rootNode = NULL;
   n = getnumber(d);//ノードの数を数える。
   //printf("%d\n",n);
@@ -59,8 +59,7 @@ void sortBinSTree(BinSTreeNode* rootNode){
     addNode(rootNode,createNode(d[i].word));
   }
   //printTree(rootNode,1);
-  //printf("end sort\n");
-  for(i = 0; i < n; i++) {
+  for(i = 0; i < n; i++){
     free(d[i].word); 
   }
   free(d);
