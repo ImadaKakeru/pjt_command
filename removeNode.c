@@ -105,7 +105,7 @@ void onlyleft(BinSTreeNode *rootNode){
 //一致したノードが左右に子ノードを持っていた時の処理
 void doublekids(BinSTreeNode *rootNode){
   struct _BinSTreeNode *tmp;
-  struct _BinSTreeNode *tmpright;
+  //struct _BinSTreeNode *tmpright;
   struct _BinSTreeNode *pare;
   struct _BinSTreeNode *right;
   //struct _BinSTreeNode *left;
@@ -299,6 +299,7 @@ void removeNode(BinSTreeNode *rootNode,char *word,int delall){
       //printf("rootremove\n");
       rootremove(rootNode);
       if(rootNode->word  == NULL){
+        printf("root word\n");
         return;
       }
       removeNode(rootNode,word,delall);

@@ -320,7 +320,7 @@ int main(int argc,char* argv[]){
       scount++;
       command = commandsearch(head->word);
       if(command == 1){
-         printf("usage: -s /word/word/\n");
+        printf("usage: -s /word/word/\n");
         return 0;
       }
       //構造体optionのheadを取ってくる。フリーも同時に行う。
@@ -329,10 +329,12 @@ int main(int argc,char* argv[]){
       s1 = (char*)malloc(sizeof(char)*x);
       s2 = (char*)malloc(sizeof(char)*x);
       //printTree(rootNode,1);
+      printf("s1 s2 get before\n");
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
+      //printf("s1 s2 get\n");
       substString(rootNode,s1,s2);
-      //printf("subst finish\n");
+      printf("subst finish\n");
       //printf("sort finished\n\n");
       //printTree(rootNode,1);
       free(s1);
