@@ -110,6 +110,7 @@ int main(int argc,char* argv[]){
   roption[2] = '\0';
   
   char *input;
+  //char *nonword = '\0';
   char *s1;
   char *s2;
   int s;
@@ -128,14 +129,14 @@ int main(int argc,char* argv[]){
     if(argv[i][0] == '-'){
       //soption
       if(mystrcmp(argv[i],soption) == 0){
-        //printf("-s start\n");
-        if((i+1) ==  argc){
-          printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");          
-        }
         options[option_count] = 1;
         option_count ++;
-        
-        if(argv[i+1][0] != '/'){
+        //printf("-s start\n");
+        if((i+1) ==  argc){
+          printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
+          return 0;
+        }
+        else if(argv[i+1][0] != '/'){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/)\n");
           return 0;
         }
@@ -197,12 +198,12 @@ int main(int argc,char* argv[]){
         options[option_count] = 4;
         option_count ++;
         if((i+1) == argc){
-          printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
+          printf("usage: ERROR(incorrect -r format follow -r/match/delall/ )\n");
           return 0;
         }
         
         else if(argv[i+1][0] != '/'){
-          printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
+          printf("usage: ERROR(incorrect -r format follow -r/match/delall/ )\n");
           return 0;
         }
         
@@ -332,7 +333,6 @@ int main(int argc,char* argv[]){
       s2 = secondsearch(head->word,s2);
       substString(rootNode,s1,s2);
       //printf("subst finish\n");
-      //sortBinSTree(rootNode);
       //printf("sort finished\n\n");
       //printTree(rootNode,1);
       free(s1);
@@ -397,13 +397,13 @@ int main(int argc,char* argv[]){
       free(oldhead);
     }
   }
-
   if(scount != 0){
     if(rootNode->right == NULL){
       
     }
     else{
       sortBinSTree(rootNode);
+      removeNode(rootNode,"\0",0);
     }
     //printf("sort start\n");
     //sortBinSTree(rootNode);

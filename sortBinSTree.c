@@ -8,23 +8,23 @@ int getnumber(BinSTreeNode* d){
 }
 
 BinSTreeNode*  getBinSTree(BinSTreeNode* rootNode,BinSTreeNode* d,int *i){
-  int x;
+  //int x;
   if(rootNode == NULL){
     return 0;
   }
   //ツリーに入っている文字を同じ構造体の中に入れる//
   getBinSTree(rootNode->left,d,i);//左側を探索
   getBinSTree(rootNode->right,d,i);
-  x = mystrlen(rootNode->word);
+  //x = mystrlen(rootNode->word);
   //printf("malloc start\n");
-  d[*i].word = (char*)malloc(sizeof(char)*(x*100));
+  d[*i].word = (char*)malloc(sizeof(char)*1000);
   //printf("malloc end\n");
   mystrcpy(d[*i].word,rootNode->word);//dにノードの文字を代
   //printf("mystrcpy\n");
   *i = *i+1;
-  free(rootNode->word);
-  free(rootNode);
-  rootNode = NULL;
+  //free(rootNode->word);
+  //free(rootNode);
+  //rootNode = NULL;
   return d;
 }
 void sortBinSTree(BinSTreeNode* rootNode){
@@ -39,7 +39,7 @@ void sortBinSTree(BinSTreeNode* rootNode){
   
   d = getBinSTree(rootNode,d,&x);//ノードに入っている文字を全てとってくる。
   //printf("d get\n");
-  //clearBinSTree(rootNode);
+  clearBinSTree(rootNode);
   rootNode = NULL;
   n = getnumber(d);//ノードの数を数える。
   //printf("%d\n",n);
