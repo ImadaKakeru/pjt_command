@@ -12,6 +12,7 @@ struct _file* standard(char *input){
   while(input[i]!= '\0'){ //1行目が終わるまで
     if(input[i] != ' ' && input[i] != '\0'){
       while( input[i] != ' ' && input[i] != '\0'){ //文字列が終わるまで
+        //printf("input %c\n",input[i]);
         output[ncount][j] = input[i];
         i++;
         j++;
@@ -27,7 +28,9 @@ struct _file* standard(char *input){
 
   for(k=0 ; k< ncount ; k++){
     f[k].word = (char*)malloc(sizeof(char)*256);
+    //printf("%s\n",output[k]);
     mystrcpy(f[k].word,output[k]);
+    //printf("%s\n",f[k].word);
   }
   return f;
 }

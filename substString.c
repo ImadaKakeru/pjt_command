@@ -16,8 +16,8 @@ void subst(BinSTreeNode *rootNode,char *sstr,char *rstr,int *n){
 
 int substString(BinSTreeNode *rootNode,char *sstr,char* rstr){
   int m=0;
-  char s='\0';
+  //char s='\0';
   subst(rootNode,sstr,rstr,&m);
-  removeNode(rootNode,&s,0);
+  //removeNode(rootNode,&s,0);
   return m;
 }

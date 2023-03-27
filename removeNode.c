@@ -292,6 +292,7 @@ void oneremove(BinSTreeNode *rootNode,char *word){
 void removeNode(BinSTreeNode *rootNode,char *word,int delall){
   //全削除する場合
   if(delall == 0){
+    //printf("delall\n");
     if(rootNode == NULL){
       return;
     }
@@ -299,10 +300,9 @@ void removeNode(BinSTreeNode *rootNode,char *word,int delall){
       //printf("rootremove\n");
       rootremove(rootNode);
       if(rootNode->word  == NULL){
-        printf("root word\n");
         return;
       }
-      removeNode(rootNode,word,delall);
+      removeNode(rootNode,word,delall);     
     }
     else{
       //printf("allremove\n");

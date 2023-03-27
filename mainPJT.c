@@ -279,19 +279,26 @@ int main(int argc,char* argv[]){
     f = (struct _file*)malloc(sizeof(struct _file)*1500);
     //printf("---standard input---\n");
     while(fgets(input,256,stdin) != NULL){
+      j =0;
+      //printf("%d\n",j);
       f = standard(input);
       if(rootNode == NULL){
+        //printf("root %s\n",f[j].word);
         rootNode = createNode(f[j].word);
         free(f[j].word);
         j++;
         while(f[j].word != NULL){
+          //printf("root next %s\n",f[j].word);
           addNode(rootNode,createNode(f[j].word));
           free(f[j].word); 
           j++;
         }
       }
       else{
+        //printf("%d:%s\n",j,f[j].word);
         while(f[j].word != NULL){
+          //printf("02\n");
+          //printf("%s\n",f[j].word);
           addNode(rootNode,createNode(f[j].word));
           free(f[j].word);
           j++;
@@ -300,6 +307,7 @@ int main(int argc,char* argv[]){
     }
     free(input);
     free(f);
+    //printTree(rootNode,1);
     if(j == 0){
       printf("---input ERROR---\n");
       return 0;
@@ -316,7 +324,7 @@ int main(int argc,char* argv[]){
   for(int k=0 ; k < option_count ; k++){
     //s-option
     if(options[k] == 1){
-      printf("-s start\n");
+      //printf("-s start\n");
       scount++;
       command = commandsearch(head->word);
       if(command == 1){
@@ -329,12 +337,12 @@ int main(int argc,char* argv[]){
       s1 = (char*)malloc(sizeof(char)*x);
       s2 = (char*)malloc(sizeof(char)*x);
       //printTree(rootNode,1);
-      printf("s1 s2 get before\n");
+      //printf("s1 s2 get before\n");
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
       //printf("s1 s2 get\n");
       substString(rootNode,s1,s2);
-      printf("subst finish\n");
+      //printf("subst finish\n");
       //printf("sort finished\n\n");
       //printTree(rootNode,1);
       free(s1);
@@ -404,7 +412,7 @@ int main(int argc,char* argv[]){
   // printTree(rootNode,1);
   if(scount != 0){
     if(rootNode->right == NULL){
-      
+      //removeNode(rootNode,"\0",0);
     }
     else{
       sortBinSTree(rootNode);
