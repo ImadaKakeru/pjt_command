@@ -275,7 +275,7 @@ int main(int argc,char* argv[]){
   }
   //filecountが０だったら標準入力にする。---OK---
   if(filecount == 0){
-    input = (char*)malloc(sizeof(char)*256);
+    input = (char*)malloc(sizeof(char)*1000);
     f = (struct _file*)malloc(sizeof(struct _file)*1500);
     //printf("---standard input---\n");
     while(fgets(input,256,stdin) != NULL){
@@ -311,7 +311,7 @@ int main(int argc,char* argv[]){
     }*/
   //実際の処理を行う。ok
   if(option_count == 0){
-    printTree(rootNode,1);
+    //printTree(rootNode,1);
   }
   for(int k=0 ; k < option_count ; k++){
     //s-option
@@ -328,7 +328,7 @@ int main(int argc,char* argv[]){
       x = mystrlen(head->word);
       s1 = (char*)malloc(sizeof(char)*x);
       s2 = (char*)malloc(sizeof(char)*x);
-      
+      //printTree(rootNode,1);
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
       substString(rootNode,s1,s2);
@@ -345,11 +345,13 @@ int main(int argc,char* argv[]){
     }
     //r-option
     else{
-      printf("-r start\n");
+      //printf("-r option\n");
+      //printTree(rootNode,1);
+      //printf("-r start\n");
       oldhead = head;
       x = mystrlen(head->word);
-      s1 = (char*)malloc(sizeof(char)*x);
-      s2 = (char*)malloc(sizeof(char)*x);
+      s1 = (char*)malloc(sizeof(char)*(x+1));
+      s2 = (char*)malloc(sizeof(char)*(x+1));
       
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
@@ -397,6 +399,7 @@ int main(int argc,char* argv[]){
       free(oldhead);
     }
   }
+  // printTree(rootNode,1);
   if(scount != 0){
     if(rootNode->right == NULL){
       
@@ -409,7 +412,7 @@ int main(int argc,char* argv[]){
     //sortBinSTree(rootNode);
     //printTree(rootNode,1);
   }
-  
+  //printTree(rootNode,1);
   if(ucount == 1){
     if(rootNode->word != NULL){
       uNode(rootNode);

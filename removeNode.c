@@ -105,6 +105,7 @@ void onlyleft(BinSTreeNode *rootNode){
 //一致したノードが左右に子ノードを持っていた時の処理
 void doublekids(BinSTreeNode *rootNode){
   struct _BinSTreeNode *tmp;
+  struct _BinSTreeNode *tmpright;
   struct _BinSTreeNode *pare;
   struct _BinSTreeNode *right;
   //struct _BinSTreeNode *left;
@@ -113,6 +114,7 @@ void doublekids(BinSTreeNode *rootNode){
   //left = rootNode->left;
   
   if(right->left == NULL){
+    //printf("right left\n");
     mystrcpy(rootNode->word,right->word);
     right->pare = NULL;
     tmp = right->right;
@@ -131,12 +133,18 @@ void doublekids(BinSTreeNode *rootNode){
   
   else if(right->left != NULL){
     tmp = leftsearch(right);//右の子ノードが左の最先端に持つノードを回収
-    pare = tmp->pare;
-    pare->left = NULL;//最左端の子ノードを孤立させる。
-    tmp->pare = NULL;
     mystrcpy(rootNode->word,tmp->word);//ルートに取ってきたノードの文字をコピーする。
-    free(tmp->word);//取ってきたものを解放する。
-    free(tmp);
+  
+    if(tmp->right != NULL){
+      onlyright(tmp);
+    }
+    else{
+      pare = tmp->pare;
+      pare->left = NULL;
+      tmp->pare = NULL;
+      free(tmp->word);//取ってきたものを解放する。
+      free(tmp);
+    }
   }
   //置き換えたらPJTの性質を満たさなくなるのでソートして整えておく
   //sortBinSTree(rootNode);

@@ -20,5 +20,4 @@ int substString(BinSTreeNode *rootNode,char *sstr,char* rstr){
   subst(rootNode,sstr,rstr,&m);
   removeNode(rootNode,&s,0);
   return m;
-  
 }

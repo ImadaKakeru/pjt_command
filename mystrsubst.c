@@ -20,7 +20,7 @@ char* mystrsubst(char*s1,char* sstr,char* rstr){
   y = mystrlen(sstr);
   z = mystrlen(rstr);
 
-  new_str = (char*)malloc(sizeof(char)*((x+1)*(y+1)*(z+1)));
+  new_str = (char*)malloc(sizeof(char)*((x+10)*(y+10)*(z+10)));
 
   char ss[y]; //s2と同じ長さでs1からとてきた配列
   if(y == 0){

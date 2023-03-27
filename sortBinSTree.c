@@ -39,6 +39,7 @@ void sortBinSTree(BinSTreeNode* rootNode){
   
   d = getBinSTree(rootNode,d,&x);//ノードに入っている文字を全てとってくる。
   //printf("d get\n");
+  //printTree(rootNode,1);
   clearBinSTree(rootNode);
   rootNode = NULL;
   n = getnumber(d);//ノードの数を数える。
