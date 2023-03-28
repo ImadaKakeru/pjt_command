@@ -6,7 +6,7 @@ struct _file* standard(char *input){
   int k=0;
   int ncount = 0;
   char output[256][256];
-  struct _file* f = (struct _file*)malloc(sizeof(struct _file)*1500);
+  struct _file* f = (struct _file*)malloc(sizeof(struct _file)*1000);
   
   input = chomp(input);
   while(input[i]!= '\0'){ //1行目が終わるまで

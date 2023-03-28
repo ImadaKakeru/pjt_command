@@ -40,3 +40,4 @@ void addque(option *headque,option *add,option *tail);
 struct _file* filesearch(char* filename);
 void uNode(BinSTreeNode *rootNode);
 struct _file* standard(char *input);
+void clearque(struct _option *head,struct _option *tail);

@@ -7,5 +7,5 @@ void clearBinSTree(BinSTreeNode *rootNode){
   clearBinSTree(rootNode->right);
   free(rootNode->word);
   free(rootNode);
-  rootNode = NULL;
+  //rootNode = NULL;
 }

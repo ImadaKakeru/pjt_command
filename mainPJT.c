@@ -76,7 +76,7 @@ char* secondsearch(char* word,char* s2){
 }
 
 
-int main(int argc,char* argv[]){
+int main2(int argc,char* argv[]){
   struct _option *head=NULL;
   struct _option *oldhead;
   struct _option *tail=NULL;
@@ -88,7 +88,6 @@ int main(int argc,char* argv[]){
   int j=0;
   int x;
   int filecount=0;
-  //char pjt[9] = "./pjt.out";
   char soption[3]; //option_number = 1
   soption[0] = '-';
   soption[1] = 's';
@@ -131,13 +130,14 @@ int main(int argc,char* argv[]){
       if(mystrcmp(argv[i],soption) == 0){
         options[option_count] = 1;
         option_count ++;
-        //printf("-s start\n");
         if((i+1) ==  argc){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/ )\n");
+          clearque(head,tail);
           return 0;
         }
         else if(argv[i+1][0] != '/'){
           printf("usage: ERROR(incorrect -s format follow -s/match/replace/)\n");
+          clearque(head,tail);
           return 0;
         }
         
@@ -161,8 +161,6 @@ int main(int argc,char* argv[]){
           printf("usage: ERROR(incorrect -p format '-p' is one)\n");
           return 0;
         }
-        //options[option_count] = 2;
-        //option_count ++;
         if(i+1 == argc){
           i++;
           break;
@@ -188,8 +186,6 @@ int main(int argc,char* argv[]){
       //u option
       else if(mystrcmp(argv[i],uoption) == 0){
         ucount++;
-        //options[option_count] = 3;
-        //option_count ++;
         i++;
       }
       
@@ -199,23 +195,23 @@ int main(int argc,char* argv[]){
         option_count ++;
         if((i+1) == argc){
           printf("usage: ERROR(incorrect -r format follow -r/match/delall/ )\n");
+          clearque(head,tail);
           return 0;
         }
         
         else if(argv[i+1][0] != '/'){
           printf("usage: ERROR(incorrect -r format follow -r/match/delall/ )\n");
+          clearque(head,tail);
           return 0;
         }
         
         else{
           if(head == NULL){
-            //printf("head -r\n");
             headque = createque(argv[i+1]);
             head = headque;
             tail = headque;
           }
           else{
-            //printf("add -r\n");
             addque(headque,createque(argv[i+1]),tail);
           }
         }
@@ -232,7 +228,6 @@ int main(int argc,char* argv[]){
     }
   }
   while( i < argc){
-    //testfile = testcase(testfile,argv[i]);
     if(argv[i][0] == '-'){
       printf("usage: some options are invalid\n");
       clearBinSTree(rootNode);
@@ -276,59 +271,48 @@ int main(int argc,char* argv[]){
   //filecountが０だったら標準入力にする。---OK---
   if(filecount == 0){
     input = (char*)malloc(sizeof(char)*1000);
-    f = (struct _file*)malloc(sizeof(struct _file)*1500);
-    //printf("---standard input---\n");
     while(fgets(input,256,stdin) != NULL){
       j =0;
-      //printf("%d\n",j);
       f = standard(input);
       if(rootNode == NULL){
-        //printf("root %s\n",f[j].word);
         rootNode = createNode(f[j].word);
         free(f[j].word);
         j++;
         while(f[j].word != NULL){
-          //printf("root next %s\n",f[j].word);
           addNode(rootNode,createNode(f[j].word));
           free(f[j].word); 
           j++;
         }
       }
       else{
-        //printf("%d:%s\n",j,f[j].word);
         while(f[j].word != NULL){
-          //printf("02\n");
-          //printf("%s\n",f[j].word);
           addNode(rootNode,createNode(f[j].word));
           free(f[j].word);
           j++;
         }
       }
+      free(f);
     }
     free(input);
-    free(f);
-    //printTree(rootNode,1);
+    //free(f);
     if(j == 0){
       printf("---input ERROR---\n");
       return 0;
     }
-    //printf("\n\n");
   }
-  /*for(i=0 ; i < j ; i++){
-    
-    }*/
+  
   //実際の処理を行う。ok
   if(option_count == 0){
-    //printTree(rootNode,1);
   }
   for(int k=0 ; k < option_count ; k++){
     //s-option
     if(options[k] == 1){
-      //printf("-s start\n");
       scount++;
       command = commandsearch(head->word);
       if(command == 1){
         printf("usage: -s /word/word/\n");
+        clearBinSTree(rootNode);
+        clearque(head,tail);
         return 0;
       }
       //構造体optionのheadを取ってくる。フリーも同時に行う。
@@ -336,15 +320,9 @@ int main(int argc,char* argv[]){
       x = mystrlen(head->word);
       s1 = (char*)malloc(sizeof(char)*x);
       s2 = (char*)malloc(sizeof(char)*x);
-      //printTree(rootNode,1);
-      //printf("s1 s2 get before\n");
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
-      //printf("s1 s2 get\n");
       substString(rootNode,s1,s2);
-      //printf("subst finish\n");
-      //printf("sort finished\n\n");
-      //printTree(rootNode,1);
       free(s1);
       free(s2);
       free(head->word);
@@ -355,9 +333,6 @@ int main(int argc,char* argv[]){
     }
     //r-option
     else{
-      //printf("-r option\n");
-      //printTree(rootNode,1);
-      //printf("-r start\n");
       oldhead = head;
       x = mystrlen(head->word);
       s1 = (char*)malloc(sizeof(char)*(x+1));
@@ -365,9 +340,7 @@ int main(int argc,char* argv[]){
       
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
-      //printf("s1 s2 get\n");
       s = *s2;
-      //printTree(rootNode,1);
       if(s < 48 || s >57){
         removeNode(rootNode,s1,1);
         free(s1);
@@ -376,34 +349,39 @@ int main(int argc,char* argv[]){
       else if(atoi(s2)  == 0){
         if(mystrlen(s2) != 1){
           if(rootNode->word == NULL){
+            //free(s1);
+            //free(s2);
             break;
           }
           removeNode(rootNode,s1,1);
-          free(s1);
-          free(s2);
+          //free(s1);
+          //free(s2);
         }
         else{
           if(rootNode->word == NULL){
+            //free(s1);
+            //free(s2);
             break;
           }
           removeNode(rootNode,s1,atoi(s2));
-          free(s1);
-          free(s2);
+          //free(s1);
+          //free(s2);
         }
+        free(s1);
+        free(s2);
       }
       else{
         if(rootNode->word == NULL){
+          //free(s1);
+          //free(s2);
           break;
         }
-        //printf("remove \n");
         removeNode(rootNode,s1,atoi(s2));
-        //printf("remove end\n");
         free(s1);
         free(s2);
       }
       free(head->word);
       if(head->next != NULL){
-        //printf("head change\n");
         head = head->next;
       }
       free(oldhead);
@@ -412,17 +390,12 @@ int main(int argc,char* argv[]){
   // printTree(rootNode,1);
   if(scount != 0){
     if(rootNode->right == NULL){
-      //removeNode(rootNode,"\0",0);
     }
     else{
       sortBinSTree(rootNode);
       removeNode(rootNode,"\0",0);
     }
-    //printf("sort start\n");
-    //sortBinSTree(rootNode);
-    //printTree(rootNode,1);
   }
-  //printTree(rootNode,1);
   if(ucount == 1){
     if(rootNode->word != NULL){
       uNode(rootNode);
@@ -433,16 +406,20 @@ int main(int argc,char* argv[]){
   }
   else{
     printf("usage: u option should not duplicated\n");
+    clearBinSTree(rootNode);
     return 0;
   }
   
   if(rootNode->word == NULL){
     printf("---BinSTree---\n");
     printf("There is no node\n");
+    free(rootNode);
+    //free(rootNode->word);
   }
   else{
     printf("---BinSTree---\n");
     printTree(rootNode,p_number);
+    clearBinSTree(rootNode);
   }
   //clearBinSTree(rootNode);
   return 0;
