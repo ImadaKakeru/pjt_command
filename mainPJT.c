@@ -76,7 +76,7 @@ char* secondsearch(char* word,char* s2){
 }
 
 
-int main2(int argc,char* argv[]){
+int main(int argc,char* argv[]){
   struct _option *head=NULL;
   struct _option *oldhead;
   struct _option *tail=NULL;
@@ -318,8 +318,8 @@ int main2(int argc,char* argv[]){
       //構造体optionのheadを取ってくる。フリーも同時に行う。
       oldhead = head;
       x = mystrlen(head->word);
-      s1 = (char*)malloc(sizeof(char)*x);
-      s2 = (char*)malloc(sizeof(char)*x);
+      s1 = (char*)malloc(sizeof(char)*(x+1));
+      s2 = (char*)malloc(sizeof(char)*(x+1));
       s1 = firstsearch(head->word,s1);
       s2 = secondsearch(head->word,s2);
       substString(rootNode,s1,s2);
@@ -349,31 +349,35 @@ int main2(int argc,char* argv[]){
       else if(atoi(s2)  == 0){
         if(mystrlen(s2) != 1){
           if(rootNode->word == NULL){
-            //free(s1);
-            //free(s2);
+            free(s1);
+            free(s2);
+            //free(head->word);
+            //free(head);
             break;
           }
           removeNode(rootNode,s1,1);
-          //free(s1);
-          //free(s2);
         }
         else{
           if(rootNode->word == NULL){
-            //free(s1);
-            //free(s2);
+            free(s1);
+            free(s2);
+            if(head->word != NULL){
+              free(head->word);
+              free(head);
+            }
             break;
           }
           removeNode(rootNode,s1,atoi(s2));
-          //free(s1);
-          //free(s2);
         }
         free(s1);
         free(s2);
       }
       else{
         if(rootNode->word == NULL){
-          //free(s1);
-          //free(s2);
+          free(s1);
+          free(s2);
+          //free(head->word);
+          //free(head);
           break;
         }
         removeNode(rootNode,s1,atoi(s2));
@@ -381,6 +385,7 @@ int main2(int argc,char* argv[]){
         free(s2);
       }
       free(head->word);
+      //free(oldhead);
       if(head->next != NULL){
         head = head->next;
       }
@@ -390,6 +395,7 @@ int main2(int argc,char* argv[]){
   // printTree(rootNode,1);
   if(scount != 0){
     if(rootNode->right == NULL){
+      
     }
     else{
       sortBinSTree(rootNode);
